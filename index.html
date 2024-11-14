@@ -3,20 +3,217 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exam Results</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Marks Sheet</title>
     <style>
-        .container { margin-top: 50px; }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            max-width: 800px;
+            margin: 0 auto;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .header {
+            background-color: #4caf50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .header h2, .header h3 {
+            margin: 0;
+            padding: 5px 0;
+        }
+        .search-section {
+            padding: 20px;
+            text-align: center;
+            background-color: #f5f5f5;
+        }
+        .search-section input {
+            padding: 8px 15px;
+            width: 200px;
+            margin-right: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .search-section button {
+            padding: 8px 20px;
+            background-color: #1976d2;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        th {
+            background-color: #1976d2;
+            color: white;
+        }
+        .part-header {
+            background-color: #03a9f4;
+            color: white;
+            padding: 10px 15px;
+            text-align: left;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .part-total {
+            background-color: #e3f2fd;
+            padding: 10px;
+            text-align: right;
+            font-weight: bold;
+            border: 1px solid #bbdefb;
+        }
+        .final-results {
+            background-color: #4caf50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .final-results strong {
+            display: block;
+            margin: 5px 0;
+        }
+        .print-button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #fff;
+            color: #4caf50;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        #result-section {
+            display: none;
+            padding: 20px;
+        }
+        #student-name {
+            text-align: center;
+            color: #333;
+            margin: 20px 0;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        @media print {
+            body {
+                background-color: #fff;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                border: none;
+            }
+            .search-section, .print-button {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>Search Exam Results</h2>
-        <input type="text" id="studentID" class="form-control" placeholder="Enter Student ID">
-        <button class="btn btn-primary mt-3" onclick="searchResults()">Search</button>
-        <div id="resultDisplay" class="mt-4"></div>
-    </div>
+        <div class="header">
+            <h2>BGS INDEPENDENT PU COLLEGE, TB EXTENSION, NAGAMANGALA</h2>
+            <h3>II PUC 'A' Section District Level Test Results</h3>
+        </div>
 
+        <div class="search-section">
+            <input type="number" id="studentID" placeholder="Enter Student ID">
+            <button onclick="searchResults()">Search</button>
+        </div>
+
+        <div id="result-section" style="display: none;">
+            <h4 id="student-name"></h4>
+            
+            <div class="part-header">Part A - Languages</div>
+            <table>
+                <tr>
+                    <th>Subject</th>
+                    <th>Theory Marks</th>
+                    <th>Practical Marks</th>
+                    <th>Result</th>
+                </tr>
+                <tr>
+                    <td>Kannada</td>
+                    <td id="kannada-theory"></td>
+                    <td id="kannada-practical"></td>
+                    <td id="kannada-result"></td>
+                </tr>
+                <tr>
+                    <td>English</td>
+                    <td id="english-theory"></td>
+                    <td id="english-practical"></td>
+                    <td id="english-result"></td>
+                </tr>
+            </table>
+            
+            <div class="part-total">Part A Total: <span id="partA-total">0</span></div>
+            
+            <div class="part-header">Part B - Core Subjects</div>
+            <table>
+                <tr>
+                    <th>Subject</th>
+                    <th>Theory Marks</th>
+                    <th>Practical Marks</th>
+                    <th>Total Marks</th>
+                    <th>Result</th>
+                </tr>
+                <tr>
+                    <td>Physics</td>
+                    <td id="physics-theory"></td>
+                    <td id="physics-practical"></td>
+                    <td id="physics-total"></td>
+                    <td id="physics-result"></td>
+                </tr>
+                <tr>
+                    <td>Chemistry</td>
+                    <td id="chemistry-theory"></td>
+                    <td id="chemistry-practical"></td>
+                    <td id="chemistry-total"></td>
+                    <td id="chemistry-result"></td>
+                </tr>
+                <tr>
+                    <td>Mathematics</td>
+                    <td id="mathematics-theory"></td>
+                    <td id="mathematics-practical"></td>
+                    <td id="mathematics-total"></td>
+                    <td id="mathematics-result"></td>
+                </tr>
+                <tr>
+                    <td>Biology</td>
+                    <td id="biology-theory"></td>
+                    <td id="biology-practical"></td>
+                    <td id="biology-total"></td>
+                    <td id="biology-result"></td>
+                </tr>
+            </table>
+            
+            <div class="part-total">Part B Total: <span id="partB-total">0</span></div>
+            
+            <div class="final-results">
+                <strong>Grand Total: <span id="grand-total">0</span></strong>
+                <strong>Final Result: <span id="final-result"></span></strong>
+                <button class="print-button" onclick="printMarksheet()">Print Marksheet</button>
+            </div>
+        </div>
+    </div>
     <script src="scripts.js"></script>
 </body>
 </html>
