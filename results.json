@@ -1,0 +1,5 @@
+[
+    { "student_id": "S123", "name": "John Doe", "score": 85 },
+    { "student_id": "S124", "name": "Jane Smith", "score": 90 },
+    { "student_id": "S125", "name": "Sam Brown", "score": 78 }
+]
